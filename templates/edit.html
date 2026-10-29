@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Edit task{% endblock %}
+
+{% block content %}
+<h1>Edit task</h1>
+
+<form class="edit-form" method="post">
+  <label for="title">Title</label>
+  <input type="text" id="title" name="title" value="{{ task.title }}" maxlength="255" required>
+
+  <label for="due_date">Due date (leave empty for none)</label>
+  <input type="date" id="due_date" name="due_date"
+         value="{{ task.due_date.isoformat() if task.due_date else '' }}">
+
+  <label for="priority">Priority</label>
+  <select id="priority" name="priority">
+    {% for p in ['low', 'medium', 'high'] %}
+    <option value="{{ p }}" {{ 'selected' if task.priority == p else '' }}>{{ p | capitalize }}</option>
+    {% endfor %}
+  </select>
+
+  <div class="buttons">
+    <button type="submit">Save</button>
+    <a href="{{ url_for('index') }}">Cancel</a>
+  </div>
+</form>
+{% endblock %}
